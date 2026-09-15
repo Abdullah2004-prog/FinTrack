@@ -4,9 +4,6 @@ import json
 import os
 from datetime import datetime
 
-# This file is the web connector. Your original finance-tracking project
-# remains in original-project/ and is not modified.
-
 app = Flask(__name__)
 DATA_FILE = "transactions.json"
 CSV_FILE = "transactions.csv"
