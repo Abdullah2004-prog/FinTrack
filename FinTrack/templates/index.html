@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinTrack — Personal Finance Tracker</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">F</span><div><b>FinTrack</b><small>Finance Manager</small></div></div>
+    <nav>
+      <a class="active" href="#dashboard">Dashboard</a>
+      <a href="#transactions">Transactions</a>
+      <a href="#budgets">Budgets</a>
+      <a href="#savings">Savings Goal</a>
+    </nav>
+    <div class="side-bottom">
+      <a href="#about">About</a>
+      <div class="storage"><span></span> Local finance data</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">PERSONAL FINANCE</p>
+        <h1>Good to see you.</h1>
+      </div>
+      <button class="download" onclick="downloadCSV()">↓ &nbsp; Download CSV</button>
+    </header>
+
+    <section id="dashboard" class="hero-grid">
+      <div class="balance-card">
+        <div class="card-label">CURRENT BALANCE</div>
+        <div id="balance" class="balance">PKR 0</div>
+        <div class="balance-note">Income minus expenses</div>
+        <div class="balance-line"><span id="incomeShare"></span></div>
+      </div>
+      <div class="stat-card"><span class="stat-icon income">↗</span><div><small>Total income</small><strong id="income">PKR 0</strong></div></div>
+      <div class="stat-card"><span class="stat-icon expense">↘</span><div><small>Total expenses</small><strong id="expense">PKR 0</strong></div></div>
+      <div class="stat-card"><span class="stat-icon count">#</span><div><small>Transactions</small><strong id="count">0</strong></div></div>
+    </section>
+
+    <section id="alerts" class="alerts-panel panel" style="display:none">
+      <div class="panel-head">
+        <div><h2>Budget alerts</h2><p>Categories approaching or exceeding their limits</p></div>
+        <span class="alert-count" id="alertCount">0 alerts</span>
+      </div>
+      <div id="alertList" class="alert-list"></div>
+    </section>
+
+    <section class="content-grid">
+      <div id="transactions" class="panel transactions-panel">
+        <div class="panel-head">
+          <div><h2>Recent transactions</h2><p>Your latest income and expenses</p></div>
+          <button class="primary" onclick="openModal()">+ Add transaction</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>DATE</th><th>TYPE</th><th>CATEGORY</th><th>PAYMENT</th><th class="right">AMOUNT</th></tr></thead>
+            <tbody id="transactionRows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div id="budgets" class="panel mini-panel">
+          <div class="panel-head"><div><h2>Budget overview</h2><p>Category spending</p></div></div>
+          <div id="budgetBars" class="bars"></div>
+        </div>
+
+        <div id="savings" class="panel mini-panel savings">
+          <div class="savings-top"><div><h2>Savings goal</h2><p>Track your progress</p></div><span>PKR 20,000</span></div>
+          <div class="progress"><i id="savingProgress"></i></div>
+          <div class="saving-meta"><span id="savedAmount">PKR 0 saved</span><b id="savingPercent">0%</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="tech-note">
+      <div><span class="dot"></span><b>FinTrack</b> uses your existing Python finance-tracking logic with this web interface.</div>
+      <span>CSV export included</span>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <p class="eyebrow">NEW RECORD</p><h2>Add transaction</h2>
+    <form id="txForm">
+      <div class="toggle"><button type="button" class="selected" data-type="Expense">Expense</button><button type="button" data-type="Income">Income</button></div>
+      <input type="hidden" id="type" value="Expense">
+      <label>Amount<input id="amount" type="number" min="0.01" step="0.01" required placeholder="0"></label>
+      <div class="two"><label>Date<input id="date" type="date" required></label>
+      <label>Category<select id="category"><option>Food</option><option>Transport</option><option>Bills</option><option>Salary</option><option>Shopping</option><option>Entertainment</option><option>Other</option></select></label></div>
+      <label>Payment type<select id="payment"><option>Cash</option><option>Card</option><option>Bank Transfer</option><option>Other</option></select></label>
+      <button class="primary full" type="submit">Save transaction</button>
+    </form>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
