@@ -25,7 +25,7 @@ function renderTransactions(){
 }
 function renderBudgets(){
   // Limits used by the original FinTrack Budget setup.
-  const limits={Food:5000,Rent:15000,Transport:15000,Bills:15000,Shopping:10000,Entertainment:5000};
+  const limits={Food:5000,Transport:15000,Bills:15000,Shopping:10000,Entertainment:5000};
   const spent={};
   transactions.forEach(t=>{
     if(String(t.type||"").toLowerCase()==="expense")
